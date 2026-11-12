@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Задачи — Математика</title>
+  <meta name="description" content="Задачи на логику, числа и геометрию с решениями. Реши сам — потом посмотри ответ.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∑</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Manrope:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></div>
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html"><span style="color: var(--bs-primary);">∑</span> Математика</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link active" href="tasks.html">Задачи</a></li>
+          <li class="nav-item"><a class="nav-link" href="tools.html">Инструменты</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">О проекте</a></li>
+          <li class="nav-item mt-2 mt-lg-0"><button class="btn btn-outline-secondary btn-sm" id="themeToggle">🌙</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <h1 class="fw-bold mb-2">Задачи</h1>
+    <p class="text-body-secondary mb-4">Реши сам — потом посмотри ответ.</p>
+
+    <div class="row g-2 mb-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text">🔍</span>
+          <input type="text" id="search" class="form-control" placeholder="Поиск по условию...">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="btn-group w-100" role="group">
+          <button class="btn btn-primary filter-btn active" data-cat="all">Все</button>
+          <button class="btn btn-outline-secondary filter-btn" data-cat="logic">Логика</button>
+          <button class="btn btn-outline-secondary filter-btn" data-cat="numbers">Числа</button>
+          <button class="btn btn-outline-secondary filter-btn" data-cat="geometry">Геометрия</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3" id="grid">
+      <div class="col task-card" data-cat="logic" data-title="2 + 2 × 2">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-success mb-2">Легко</span>
+          <p class="card-text">Чему равно 2 + 2 × 2?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">2 + 4 = <strong>6</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="numbers" data-title="Числа Фибоначчи">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-success mb-2">Легко</span>
+          <p class="card-text">Продолжи ряд: 1, 1, 2, 3, 5, 8, …</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">Числа Фибоначчи. Дальше <strong>13</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="numbers" data-title="2³ или 3²">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-warning mb-2">Средне</span>
+          <p class="card-text">Что больше: 2³ или 3²?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">8 и 9. Больше <strong>3²</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="logic" data-title="Улитка на столбе">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-danger mb-2">Сложно</span>
+          <p class="card-text">Улитка на столбе 10 м: днём +3 м, ночью −2 м. За сколько дней?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">За <strong>8 дней</strong>: в последний день она не сползёт.</p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="geometry" data-title="Площадь треугольника">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-warning mb-2">Средне</span>
+          <p class="card-text">Стороны 3, 4, 5. Чему равна площадь?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">Это прямоугольный треугольник. Площадь = 3×4/2 = <strong>6</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="geometry" data-title="Углы треугольника">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-success mb-2">Легко</span>
+          <p class="card-text">Два угла треугольника 50° и 60°. Третий?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">180 − 50 − 60 = <strong>70°</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="numbers" data-title="Цифра 9 от 1 до 100">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-danger mb-2">Сложно</span>
+          <p class="card-text">Сколько раз цифра 9 встречается от 1 до 100?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0"><strong>19 раз</strong>: 10 в единицах + 10 в десятках, но 99 уже посчитан.</p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="numbers" data-title="2¹⁰ или 10³">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-warning mb-2">Средне</span>
+          <p class="card-text">Что больше: 2¹⁰ или 10³?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">1024 и 1000. Больше <strong>2¹⁰</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="geometry" data-title="Диагонали пятиугольника">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-success mb-2">Легко</span>
+          <p class="card-text">Сколько диагоналей у пятиугольника?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">Формула n(n−3)/2 = 5×2/2 = <strong>5</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="numbers" data-title="Продолжи 2, 4, 8, 16">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-success mb-2">Легко</span>
+          <p class="card-text">Продолжи: 2, 4, 8, 16, …</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">Каждое число умножается на 2. Дальше <strong>32</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="numbers" data-title="Чему равен 0!">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-warning mb-2">Средне</span>
+          <p class="card-text">Чему равен 0! (ноль факториал)?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">По определению <strong>1</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="numbers" data-title="Простые числа до 20">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-success mb-2">Легко</span>
+          <p class="card-text">Сколько простых чисел до 20?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">2, 3, 5, 7, 11, 13, 17, 19 — всего <strong>8</strong></p></details>
+        </div></div>
+      </div>
+      <div class="col task-card" data-cat="geometry" data-title="Сумма углов четырёхугольника">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <span class="badge text-bg-success mb-2">Легко</span>
+          <p class="card-text">Чему равна сумма углов четырёхугольника?</p>
+          <details><summary>Показать решение</summary><p class="mt-2 mb-0">(n−2)×180° = 2×180° = <strong>360°</strong></p></details>
+        </div></div>
+      </div>
+    </div>
+
+    <p class="text-body-secondary small mt-4" id="empty" style="display:none;">Ничего не найдено.</p>
+  </main>
+
+  <footer class="border-top py-4 mt-4">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Колонка 1: о проекте -->
+      <div class="col-lg-5">
+        <div class="fw-bold fs-5 mb-2">
+          <span style="color: var(--bs-primary);">∑</span> Математика
+        </div>
+        <p class="text-body-secondary small mb-3">
+          Маленький сайт для тех, кому интересны числа, графики и красивые задачи.
+        </p>
+        <div class="d-flex gap-2">
+          <a href="https://t.me/" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary" title="Telegram">✈️</a>
+          <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary" title="GitHub">💻</a>
+          <a href="mailto:hello@example.ru" class="btn btn-sm btn-outline-secondary" title="Email">✉️</a>
+        </div>
+      </div>
+
+      <!-- Колонка 2: навигация -->
+      <div class="col-6 col-lg-3">
+          <ul class="list-unstyled small mb-0">
+            <li class="mb-2"><a href="tasks.html" class="link-secondary text-decoration-none">Задачи</a></li>
+            <li class="mb-2"><a href="tools.html" class="link-secondary text-decoration-none">Инструменты</a></li>
+            <li><a href="about.html" class="link-secondary text-decoration-none">О проекте</a></li>
+          </ul>
+        </div>
+
+      <!-- Колонка 3: контакты -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold mb-3">Контакты</h6>
+        <ul class="list-unstyled small mb-0">
+          <li class="mb-2"><a href="mailto:hello@example.ru" class="link-secondary text-decoration-none">hello@example.ru</a></li>
+          <li class="mb-2"><a href="https://t.me/" target="_blank" rel="noopener" class="link-secondary text-decoration-none">Telegram</a></li>
+          <li><a href="https://github.com/" target="_blank" rel="noopener" class="link-secondary text-decoration-none">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Нижняя полоса -->
+    <hr class="my-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 small text-body-secondary">
+      <span>© 2026 Математика. Все права защищены.</span>
+      <span>Образовательный проект · не заменяет учебник</span>
+    </div>
+  </div>
+</footer>
+
+ <button id="toTop" class="to-top-btn" title="Наверх" aria-label="Наверх">
+  <span>Наверх</span>
+</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    const cards = document.querySelectorAll('.task-card');
+    const search = document.getElementById('search');
+    const buttons = document.querySelectorAll('.filter-btn');
+    const empty = document.getElementById('empty');
+    let cat = 'all';
+
+    function apply() {
+      const q = search.value.toLowerCase().trim();
+      let visible = 0;
+      cards.forEach(c => {
+        const okCat = cat === 'all' || c.dataset.cat === cat;
+        const okText = c.dataset.title.toLowerCase().includes(q) || c.textContent.toLowerCase().includes(q);
+        const show = okCat && okText;
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      empty.style.display = visible ? 'none' : 'block';
+    }
+
+    buttons.forEach(b => b.addEventListener('click', () => {
+      buttons.forEach(x => { x.classList.remove('active', 'btn-primary'); x.classList.add('btn-outline-secondary'); });
+      b.classList.add('active', 'btn-primary'); b.classList.remove('btn-outline-secondary');
+      cat = b.dataset.cat;
+      apply();
+    }));
+
+    search.addEventListener('input', apply);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    // Для внутренних страниц можно сделать точки чуть менее заметными, чтобы не отвлекать от контента
+    const particleColor = isDark ? '#b39ddb' : '#6f42c1'; 
+    const lineColor = isDark ? '#80deea' : '#00b8d4'; 
+
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": particleColor },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 0.8, "opacity_min": 0.2, "sync": false } },
+        "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 1, "sync": false } },
+        "line_linked": { "enable": true, "distance": 150, "color": lineColor, "opacity": 0.4, "width": 1 },
+        "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" },
+          "onclick": { "enable": true, "mode": "push" }
+        },
+        "modes": {
+          "grab": { "distance": 200, "line_linked": { "opacity": 0.6 } },
+          "push": { "particles_nb": 3 }
+        }
+      },
+      "retina_detect": true
+    });
+  });
+</script>
+</body>
+</html>

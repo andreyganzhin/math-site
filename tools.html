@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Инструменты — Математика</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∑</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Manrope:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+  <style>
+    .fullscreen-active { position: fixed !important; top: 0; left: 0; width: 100vw !important; height: 100vh !important; z-index: 9999; background: var(--bs-body-bg); padding: 1rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html"><span style="color: var(--bs-primary);">∑</span> Математика</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="tasks.html">Задачи</a></li>
+          <li class="nav-item"><a class="nav-link active" href="tools.html">Инструменты</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">О проекте</a></li>
+          <li class="nav-item mt-2 mt-lg-0"><button class="btn btn-outline-secondary btn-sm" id="themeToggle">🌙</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <h1 class="fw-bold mb-2">Инструменты</h1>
+    <p class="text-body-secondary mb-4">Введи формулу — и сразу увидишь результат.</p>
+
+    <!-- 2D ГРАФИК -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-8">
+        <div class="card shadow-sm" id="card2d">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title m-0">График функции</h5>
+              <button class="btn btn-sm btn-outline-secondary" onclick="toggleFullscreen('card2d')" title="На весь экран">⛶</button>
+            </div>
+            
+            <div class="input-group mb-2">
+              <span class="input-group-text">f₁(x) =</span>
+              <input type="text" id="fn" class="form-control" value="a * sin(b * x)" placeholder="например, sin(x)">
+              <button class="btn btn-primary" id="plotBtn">Построить</button>
+            </div>
+
+            <div class="input-group mb-2 d-none" id="secondFuncBox">
+              <span class="input-group-text text-primary">f₂(x) =</span>
+              <input type="text" id="fn_2" class="form-control" value="x^2 - 2" placeholder="Вторая функция...">
+            </div>
+
+            <div id="error2d" class="text-danger small mb-2 d-none">
+              <strong>Ошибка:</strong> проверьте правильность формулы (скобки, знаки).
+            </div>
+            
+            <div class="d-flex flex-wrap gap-2 mb-3 p-2 rounded bg-body-tertiary border">
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="sin(">sin</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="cos(">cos</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="tan(">tan</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="log(">log</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="abs(">|x|</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="sqrt(">√</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="^2">x²</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="^3">x³</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="pi">π</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="e">e</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="x">x</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert="(">(</button>
+              <button class="btn btn-sm btn-outline-secondary math-key" data-insert=")">)</button>
+            </div>
+
+            <div class="d-flex flex-wrap gap-3 mb-3 p-2 rounded bg-body-tertiary border align-items-center">
+              <div class="d-flex align-items-center gap-2">
+                <label class="small text-body-secondary">Цвет 1:</label>
+                <input type="color" id="color2d_1" class="form-control form-control-color" value="#6f42c1" title="Цвет первой функции">
+              </div>
+
+              <div class="d-flex align-items-center gap-2 d-none" id="color2dBox">
+                <label class="small text-body-secondary">Цвет 2:</label>
+                <input type="color" id="color2d_2" class="form-control form-control-color" value="#00b8d4" title="Цвет второй функции">
+              </div>
+
+              <div class="form-check form-switch m-0 ms-auto">
+                <input class="form-check-input" type="checkbox" id="intersect2d">
+                <label class="form-check-label small" for="intersect2d">Вторая функция (пересечение)</label>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3 d-none" id="slidersBox">
+              <div class="col-md-6">
+                <label class="form-label small mb-1">Параметр a: <span id="valA" class="fw-bold">1</span></label>
+                <input type="range" class="form-range" id="sliderA" min="-5" max="5" step="0.1" value="1">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small mb-1">Параметр b: <span id="valB" class="fw-bold">1</span></label>
+                <input type="range" class="form-range" id="sliderB" min="-5" max="5" step="0.1" value="1">
+              </div>
+            </div>
+
+            <div id="plot" style="height: 380px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">Примеры формул</h5>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-sm btn-outline-primary sample" data-fn="sin(x)">sin(x)</button>
+              <button class="btn btn-sm btn-outline-primary sample" data-fn="x^2 - 4">x^2 - 4</button>
+              <button class="btn btn-sm btn-outline-primary sample" data-fn="1/x">1/x</button>
+              <button class="btn btn-sm btn-outline-primary sample" data-fn="a * sin(b * x)">a * sin(b * x)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D ГРАФИК -->
+    <div class="row g-4 mt-1">
+      <div class="col-lg-8">
+        <div class="card shadow-sm" id="card3d">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title m-0">3D-поверхность z = f(x, y)</h5>
+              <button class="btn btn-sm btn-outline-secondary" onclick="toggleFullscreen('card3d')" title="На весь экран">⛶</button>
+            </div>
+            
+            <div class="input-group mb-2">
+              <span class="input-group-text">z₁ =</span>
+              <input type="text" id="fn3d" class="form-control" value="a * sin(b * x) * cos(y)" placeholder="например, sin(x)*cos(y)">
+              <button class="btn btn-primary" id="plot3dBtn">Построить</button>
+            </div>
+
+            <div class="input-group mb-2 d-none" id="secondSurfaceBox">
+              <span class="input-group-text text-primary">z₂ =</span>
+              <input type="text" id="fn3d_2" class="form-control" value="x*y" placeholder="Вторая поверхность...">
+            </div>
+
+            <div id="error3d" class="text-danger small mb-2 d-none">
+              <strong>Ошибка:</strong> проверьте правильность формулы (скобки, знаки).
+            </div>
+            
+            <div class="d-flex flex-wrap gap-3 mb-3 p-2 rounded bg-body-tertiary border align-items-center">
+              
+              <div class="d-flex align-items-center gap-2">
+                <label class="small text-body-secondary">Цвет 1:</label>
+                <select id="color3d" class="form-select form-select-sm" style="width: auto;">
+                  <option value="Viridis">Изумруд</option>
+                  <option value="Plasma">Огонь</option>
+                  <option value="Magma">Магма</option>
+                  <option value="Cividis">Океан</option>
+                  <option value="Bluered">Холод-Тепло</option>
+                </select>
+              </div>
+
+              <div class="d-flex align-items-center gap-2 d-none" id="color2dBox3d">
+                <label class="small text-body-secondary">Цвет 2:</label>
+                <select id="color3d_2" class="form-select form-select-sm" style="width: auto;">
+                  <option value="Blues">Синий</option>
+                  <option value="Reds">Красный</option>
+                  <option value="Greens">Зеленый</option>
+                  <option value="Purples">Фиолетовый</option>
+                  <option value="Greys">Серый</option>
+                </select>
+              </div>
+              
+              <div class="form-check form-switch m-0">
+                <input class="form-check-input" type="checkbox" id="rotate3d">
+                <label class="form-check-label small" for="rotate3d">Автовращение</label>
+              </div>
+
+              <div class="form-check form-switch m-0">
+                <input class="form-check-input" type="checkbox" id="wire3d">
+                <label class="form-check-label small" for="wire3d">Сетка</label>
+              </div>
+
+              <div class="form-check form-switch m-0">
+                <input class="form-check-input" type="checkbox" id="intersect3d">
+                <label class="form-check-label small" for="intersect3d">Пересечение</label>
+              </div>
+
+              <button class="btn btn-sm btn-outline-primary fw-bold ms-auto d-none" id="showIntersectionBtn">
+                <span>✨</span> Линия пересечения
+              </button>
+            </div>
+
+            <div class="row g-3 mb-3 d-none" id="slidersBox3d">
+              <div class="col-md-6">
+                <label class="form-label small mb-1">Параметр a: <span id="valA3d" class="fw-bold">1</span></label>
+                <input type="range" class="form-range" id="sliderA3d" min="-5" max="5" step="0.1" value="1">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small mb-1">Параметр b: <span id="valB3d" class="fw-bold">1</span></label>
+                <input type="range" class="form-range" id="sliderB3d" min="-5" max="5" step="0.1" value="1">
+              </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mb-3 p-2 rounded bg-body-tertiary border">
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="sin(">sin</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="cos(">cos</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="sqrt(">√</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="^2">x²</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="x">x</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="y">y</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="*">*</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="a">a</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="b">b</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert="(">(</button>
+              <button class="btn btn-sm btn-outline-secondary math-key-3d" data-insert=")">)</button>
+            </div>
+
+            <div id="plot3d" style="height: 450px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">Примеры поверхностей</h5>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-sm btn-outline-primary sample3d" data-fn="sin(x)*cos(y)">sin(x)·cos(y)</button>
+              <button class="btn btn-sm btn-outline-primary sample3d" data-fn="x^2 - y^2">x² − y²</button>
+              <button class="btn btn-sm btn-outline-primary sample3d" data-fn="x^2 + y^2">x² + y²</button>
+              <button class="btn btn-sm btn-outline-primary sample3d" data-fn="a * sin(b * x) * cos(y)">a·sin(b·x)·cos(y)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-top py-4 mt-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="fw-bold fs-5 mb-2"><span style="color: var(--bs-primary);">∑</span> Математика</div>
+          <p class="text-body-secondary small mb-3">Помогаем школьникам, студентам и всем.</p>
+        </div>
+        <div class="col-6 col-lg-3">
+          <ul class="list-unstyled small mb-0">
+            <li class="mb-2"><a href="tasks.html" class="link-secondary text-decoration-none">Задачи</a></li>
+            <li class="mb-2"><a href="tools.html" class="link-secondary text-decoration-none">Инструменты</a></li>
+            <li><a href="about.html" class="link-secondary text-decoration-none">О проекте</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 small text-body-secondary">
+        <span>© 2026 Математика. Все права защищены.</span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" class="to-top-btn" title="Наверх"><span>Наверх</span></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.1/lib/browser/math.js"></script>
+  <script src="script.js"></script>
+
+   <script>
+    function toggleFullscreen(cardId) {
+      const el = document.getElementById(cardId);
+      el.classList.toggle('fullscreen-active');
+      setTimeout(() => {
+        if (cardId === 'card2d') draw2D();
+        if (cardId === 'card3d') build3D();
+      }, 100);
+    }
+
+    // --- КРАСИВЫЙ 2D ГРАФИК ---
+    (function () {
+      const plotDiv = document.getElementById('plot');
+      const fnInput = document.getElementById('fn');
+      const fnInput2 = document.getElementById('fn_2');
+      const plotBtn = document.getElementById('plotBtn');
+      const errMsg = document.getElementById('error2d');
+      const slidersBox = document.getElementById('slidersBox');
+      const sliderA = document.getElementById('sliderA');
+      const sliderB = document.getElementById('sliderB');
+      const valA = document.getElementById('valA');
+      const valB = document.getElementById('valB');
+      
+      const intersectCheck = document.getElementById('intersect2d');
+      const secondFuncBox = document.getElementById('secondFuncBox');
+      const color2dBox = document.getElementById('color2dBox');
+      const color1 = document.getElementById('color2d_1');
+      const color2 = document.getElementById('color2d_2');
+
+      intersectCheck.addEventListener('change', () => {
+        if (intersectCheck.checked) {
+          secondFuncBox.classList.remove('d-none');
+          color2dBox.classList.remove('d-none');
+        } else {
+          secondFuncBox.classList.add('d-none');
+          color2dBox.classList.add('d-none');
+        }
+        draw2D();
+      });
+
+      color1.addEventListener('input', draw2D);
+      color2.addEventListener('input', draw2D);
+
+      // Функция для создания полупрозрачного цвета
+      function hexToRgba(hex, alpha) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+      function draw2D() {
+        errMsg.classList.add('d-none');
+        fnInput.classList.remove('is-invalid');
+        fnInput2.classList.remove('is-invalid');
+        
+        let formula1 = fnInput.value;
+        let formula2 = intersectCheck.checked ? fnInput2.value : null;
+        
+        if (formula1.includes('a') || formula1.includes('b') || (formula2 && (formula2.includes('a') || formula2.includes('b')))) {
+          slidersBox.classList.remove('d-none');
+        } else {
+          slidersBox.classList.add('d-none');
+        }
+
+        try {
+          const aVal = parseFloat(sliderA.value) || 1;
+          const bVal = parseFloat(sliderB.value) || 1;
+          const scope = { a: aVal, b: bVal };
+
+          const expr1 = math.compile(formula1);
+          let expr2 = null;
+          if (formula2) expr2 = math.compile(formula2);
+
+          const xs = [], ys1 = [], ys2 = [];
+          const ix = [], iy = [], labels = [];
+
+          let prevDiff = null;
+          // Шаг 0.02 для более гладких линий
+          for (let x = -10; x <= 10; x += 0.02) {
+            let y1 = expr1.evaluate({ ...scope, x: x });
+            if (!isFinite(y1)) y1 = null;
+            xs.push(x);
+            ys1.push(y1);
+
+            if (expr2) {
+              let y2 = expr2.evaluate({ ...scope, x: x });
+              if (!isFinite(y2)) y2 = null;
+              ys2.push(y2);
+
+              if (y1 !== null && y2 !== null) {
+                let diff = y1 - y2;
+                if (prevDiff !== null && prevDiff * diff <= 0) {
+                  ix.push(x);
+                  iy.push(y1);
+                  labels.push(`(${x.toFixed(2)}; ${y1.toFixed(2)})`);
+                }
+                prevDiff = diff;
+              } else {
+                prevDiff = null;
+              }
+            }
+          }
+
+          const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+          const axisColor = isDark ? '#ffffff' : '#000000';
+          const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)';
+          const plotBg = isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)';
+
+          // Трассировка для первой функции (с заливкой и плавной линией)
+          const trace1 = {
+            x: xs, y: ys1, type: 'scatter', mode: 'lines',
+            name: 'f₁(x)', 
+            line: { color: color1.value, width: 3, shape: 'spline', smoothing: 1.3 },
+            fill: 'tozeroy',
+            fillcolor: hexToRgba(color1.value, 0.15) // Автоматическая прозрачность
+          };
+
+          const plotData = [trace1];
+
+          if (expr2) {
+            const trace2 = {
+              x: xs, y: ys2, type: 'scatter', mode: 'lines',
+              name: 'f₂(x)', 
+              line: { color: color2.value, width: 3, shape: 'spline', smoothing: 1.3 },
+              fill: 'tozeroy',
+              fillcolor: hexToRgba(color2.value, 0.15)
+            };
+            plotData.push(trace2);
+            
+            // Точки пересечения с белой обводкой
+            plotData.push({
+              x: ix, y: iy, type: 'scatter', mode: 'markers+text',
+              text: labels, textposition: 'top center',
+              textfont: { color: '#ff0055', size: 12, family: 'Manrope', weight: 700 },
+              marker: { 
+                color: '#ff0055', 
+                size: 9, 
+                line: { color: isDark ? '#12101a' : '#ffffff', width: 2 },
+                symbol: 'circle'
+              },
+              name: 'Пересечение',
+              hoverinfo: 'text'
+            });
+          }
+
+          const config = {
+            scrollZoom: true,
+            displayModeBar: false,
+            doubleClick: 'reset'
+          };
+
+          Plotly.newPlot(plotDiv, plotData, {
+            margin: { l: 40, r: 20, t: 20, b: 40 },
+            paper_bgcolor: 'transparent', 
+            plot_bgcolor: plotBg, // Мягкая подложка
+            font: { color: axisColor, family: 'Manrope' },
+            xaxis: { 
+              zeroline: true, zerolinecolor: axisColor, zerolinewidth: 2,
+              gridcolor: gridColor, showline: false,
+              fixedrange: false
+            },
+            yaxis: { 
+              zeroline: true, zerolinecolor: axisColor, zerolinewidth: 2,
+              gridcolor: gridColor, showline: false,
+              fixedrange: false
+            },
+            showlegend: false,
+            dragmode: 'pan',
+            hovermode: 'x unified' // Красивая всплывающая подсказка
+          }, config);
+
+        } catch (e) {
+          plotDiv.innerHTML = '<div class="text-center text-body-secondary mt-5">График не может быть построен.</div>';
+          errMsg.classList.remove('d-none');
+          fnInput.classList.add('is-invalid');
+          if (intersectCheck.checked) fnInput2.classList.add('is-invalid');
+        }
+      }
+
+      plotBtn.addEventListener('click', draw2D);
+      fnInput.addEventListener('keydown', e => { if (e.key === 'Enter') draw2D(); });
+      fnInput2.addEventListener('keydown', e => { if (e.key === 'Enter') draw2D(); });
+      sliderA.addEventListener('input', () => { valA.textContent = sliderA.value; draw2D(); });
+      sliderB.addEventListener('input', () => { valB.textContent = sliderB.value; draw2D(); });
+
+      document.querySelectorAll('.math-key').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetInput = (!secondFuncBox.classList.contains('d-none') && document.activeElement === fnInput2) ? fnInput2 : fnInput;
+          const insertText = btn.dataset.insert;
+          const start = targetInput.selectionStart;
+          targetInput.value = targetInput.value.slice(0, start) + insertText + targetInput.value.slice(targetInput.selectionEnd);
+          targetInput.selectionStart = targetInput.selectionEnd = start + insertText.length;
+          targetInput.focus();
+          draw2D();
+        });
+      });
+
+      document.querySelectorAll('.sample').forEach(b => b.addEventListener('click', () => { fnInput.value = b.dataset.fn; draw2D(); }));
+      window.addEventListener('resize', () => { clearTimeout(window.t2d); window.t2d = setTimeout(draw2D, 250); });
+      document.getElementById('themeToggle')?.addEventListener('click', () => setTimeout(draw2D, 100));
+      window.draw2D = draw2D; 
+    })();
+
+    // --- КРАСИВЫЙ 3D ГРАФИК ---
+    (function () {
+      const plotDiv = document.getElementById('plot3d');
+      const input = document.getElementById('fn3d');
+      const btn = document.getElementById('plot3dBtn');
+      const errMsg = document.getElementById('error3d');
+      const colorSelect = document.getElementById('color3d');
+      const rotateCheck = document.getElementById('rotate3d');
+      const wireCheck = document.getElementById('wire3d');
+      
+      const intersectCheck = document.getElementById('intersect3d');
+      const secondSurfaceBox = document.getElementById('secondSurfaceBox');
+      const input2 = document.getElementById('fn3d_2');
+      const color2dBox3d = document.getElementById('color2dBox3d');
+      const colorSelect2 = document.getElementById('color3d_2');
+      const showIntersectionBtn = document.getElementById('showIntersectionBtn');
+      
+      const slidersBox3d = document.getElementById('slidersBox3d');
+      const sliderA3d = document.getElementById('sliderA3d');
+      const sliderB3d = document.getElementById('sliderB3d');
+      const valA3d = document.getElementById('valA3d');
+      const valB3d = document.getElementById('valB3d');
+
+      let showOnlyLine = false;
+
+      intersectCheck.addEventListener('change', () => {
+        if (intersectCheck.checked) {
+          secondSurfaceBox.classList.remove('d-none');
+          color2dBox3d.classList.remove('d-none');
+          showIntersectionBtn.classList.remove('d-none');
+        } else {
+          secondSurfaceBox.classList.add('d-none');
+          color2dBox3d.classList.add('d-none');
+          showIntersectionBtn.classList.add('d-none');
+          showOnlyLine = false; 
+          showIntersectionBtn.innerHTML = '<span>✨</span> Линия пересечения';
+        }
+        build3D();
+      });
+
+      showIntersectionBtn.addEventListener('click', () => {
+        showOnlyLine = !showOnlyLine;
+        showIntersectionBtn.innerHTML = showOnlyLine ? '<span>🗺️</span> Показать поверхности' : '<span>✨</span> Линия пересечения';
+        build3D();
+      });
+
+      function build3D() {
+        errMsg.classList.add('d-none');
+        input.classList.remove('is-invalid');
+        input2.classList.remove('is-invalid');
+        if (window.rotInt) clearInterval(window.rotInt);
+
+        try {
+          const expr1 = math.compile(input.value);
+          let expr2 = null;
+          if (intersectCheck.checked) expr2 = math.compile(input2.value);
+
+          const scope3d = { a: parseFloat(sliderA3d.value) || 1, b: parseFloat(sliderB3d.value) || 1 };
+
+          if (input.value.includes('a') || input.value.includes('b') || (expr2 && (input2.value.includes('a') || input2.value.includes('b')))) {
+            slidersBox3d.classList.remove('d-none');
+          } else {
+            slidersBox3d.classList.add('d-none');
+          }
+
+          const N = 80; const range = 5;
+          const xs = [], ys = [], zs1 = [], zs2 = [], zs_inter = [];
+
+          for (let i = 0; i <= N; i++) {
+            xs.push(-range + (2 * range * i) / N);
+            ys.push(-range + (2 * range * i) / N);
+          }
+
+          for (let j = 0; j <= N; j++) {
+            const row1 = [], row2 = [], rowInter = [];
+            for (let i = 0; i <= N; i++) {
+              let z1 = expr1.evaluate({ ...scope3d, x: xs[i], y: ys[j] });
+              if (!isFinite(z1)) z1 = null;
+              row1.push(z1);
+
+              if (expr2) {
+                let z2 = expr2.evaluate({ ...scope3d, x: xs[i], y: ys[j] });
+                if (!isFinite(z2)) z2 = null;
+                row2.push(z2);
+
+                if (z1 !== null && z2 !== null && Math.abs(z1 - z2) < 0.15) {
+                  rowInter.push(z1);
+                } else {
+                  rowInter.push(null);
+                }
+              }
+            }
+            zs1.push(row1);
+            if (expr2) {
+              zs2.push(row2);
+              zs_inter.push(rowInter);
+            }
+          }
+
+          const dark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+          
+          const axisColor = dark ? '#ffffff' : '#000000';
+          const sceneSettings = {
+            xaxis: { title: 'x', color: axisColor, gridcolor: dark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)', zerolinecolor: axisColor, zerolinewidth: 3 },
+            yaxis: { title: 'y', color: axisColor, gridcolor: dark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)', zerolinecolor: axisColor, zerolinewidth: 3 },
+            zaxis: { title: 'z', color: axisColor, gridcolor: dark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)', zerolinecolor: axisColor, zerolinewidth: 3 },
+            bgcolor: 'transparent',
+            aspectmode: 'cube', // Куб идеальной формы
+            camera: { // Кинематографичный ракурс
+              eye: { x: 1.6, y: 1.6, z: 1.0 },
+              up: { x: 0, y: 0, z: 1 }
+            }
+          };
+
+          const plotData = [];
+
+          if (!showOnlyLine) {
+            const surface1 = {
+              type: 'surface', x: xs, y: ys, z: zs1,
+              colorscale: colorSelect.value, showscale: false, opacity: expr2 ? 0.85 : 1,
+              contours: wireCheck.checked ? {
+                x: { show: true, color: dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)' },
+                y: { show: true, color: dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)' },
+                z: { show: true, color: dark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)' }
+              } : undefined
+            };
+            plotData.push(surface1);
+
+            if (expr2) {
+              plotData.push({
+                type: 'surface', x: xs, y: ys, z: zs2,
+                colorscale: colorSelect2.value, showscale: false, opacity: 0.7, name: 'Поверхность 2'
+              });
+            }
+          }
+
+          if (expr2) {
+            plotData.push({
+              type: 'surface', x: xs, y: ys, z: zs_inter,
+              colorscale: 'Hot',
+              showscale: false,
+              name: 'Плоскость пересечения',
+              opacity: 1
+            });
+          }
+
+          if (plotData.length === 0) {
+            plotData.push({ type: 'scatter3d', x: [], y: [], z: [] });
+            errMsg.innerHTML = '<strong>Внимание:</strong> Поверхности не пересекаются в заданном диапазоне.';
+            errMsg.classList.remove('d-none');
+          }
+
+          Plotly.newPlot(plotDiv, plotData, {
+            margin: { l: 0, r: 0, t: 0, b: 0 },
+            paper_bgcolor: 'transparent', plot_bgcolor: 'transparent',
+            font: { color: axisColor, family: 'Manrope' },
+            scene: sceneSettings
+          }, { responsive: true, displayModeBar: false });
+
+          if (rotateCheck.checked) {
+            let angle = 0;
+            window.rotInt = setInterval(() => {
+              angle += 0.01; // Чуть замедлили для красоты
+              Plotly.relayout(plotDiv, {
+                'scene.camera.eye.x': 1.8 * Math.cos(angle),
+                'scene.camera.eye.y': 1.8 * Math.sin(angle),
+                'scene.camera.eye.z': 1.0
+              });
+            }, 50);
+          }
+        } catch (e) {
+          plotDiv.innerHTML = '<div class="text-center text-body-secondary mt-5">Ошибка в формуле</div>';
+          errMsg.innerHTML = '<strong>Ошибка:</strong> проверьте правильность формулы (скобки, знаки).';
+          errMsg.classList.remove('d-none');
+          input.classList.add('is-invalid');
+          if (intersectCheck.checked) input2.classList.add('is-invalid');
+        }
+      }
+
+      btn.addEventListener('click', build3D);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') build3D(); });
+      input2.addEventListener('keydown', e => { if (e.key === 'Enter') build3D(); });
+      
+      colorSelect.addEventListener('change', build3D);
+      colorSelect2.addEventListener('change', build3D);
+      rotateCheck.addEventListener('change', build3D);
+      wireCheck.addEventListener('change', build3D);
+      
+      sliderA3d.addEventListener('input', () => { valA3d.textContent = sliderA3d.value; build3D(); });
+      sliderB3d.addEventListener('input', () => { valB3d.textContent = sliderB3d.value; build3D(); });
+      
+      document.querySelectorAll('.math-key-3d').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetInput = (!secondSurfaceBox.classList.contains('d-none') && document.activeElement === input2) ? input2 : input;
+          const insertText = btn.dataset.insert;
+          const start = targetInput.selectionStart;
+          targetInput.value = targetInput.value.substring(0, start) + insertText + targetInput.value.substring(targetInput.selectionEnd);
+          targetInput.selectionStart = targetInput.selectionEnd = start + insertText.length;
+          targetInput.focus();
+          build3D();
+        });
+      });
+
+      document.querySelectorAll('.sample3d').forEach(b => b.addEventListener('click', () => { input.value = b.dataset.fn; build3D(); }));
+      window.addEventListener('resize', () => { clearTimeout(window.t3d); window.t3d = setTimeout(build3D, 300); });
+      window.build3D = build3D; 
+    })();
+  </script>
+</body>
+</html>

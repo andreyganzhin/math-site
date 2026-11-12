@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Главная — Математика</title>
+  <meta name="description" content="Математика — это красиво. Графики, задачи и интерактивные инструменты без экзаменов.">
+  <meta property="og:title" content="Математика — это красиво">
+  <meta property="og:description" content="Графики, задачи и инструменты без экзаменов.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∑</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Manrope:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Фон с частицами -->
+  <div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></div>
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html"><span style="color: var(--bs-primary);">∑</span> Математика</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="tasks.html">Задачи</a></li>
+          <li class="nav-item"><a class="nav-link" href="tools.html">Инструменты</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">О проекте</a></li>
+          <li class="nav-item mt-2 mt-lg-0"><button class="btn btn-outline-secondary btn-sm" id="themeToggle">🌙</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero py-5">
+    <div class="container py-4 py-lg-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <h1 class="display-4 fw-bold mb-3">Математика — <span style="color: var(--bs-primary);">это красиво</span></h1>
+          <p class="lead text-body-secondary mb-4">Строй графики прямо в браузере, крути 3D-поверхности и решай задачи, которые заставляют думать.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="tools.html" class="btn btn-primary btn-lg">Попробовать графики →</a>
+            <a href="tasks.html" class="btn btn-outline-secondary btn-lg">Смотреть задачи</a>
+          </div>
+        </div>
+        <div class="col-lg-5 text-center">
+          <div class="glass p-4 d-inline-block">
+            <div style="font-size: 3rem; font-family: 'JetBrains Mono', monospace; color: var(--bs-primary); font-weight: 700;">∫ e<sup>-x²</sup> dx = √π</div>
+            <div class="text-body-secondary small mt-2">интеграл Гаусса</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="formula-ticker">
+    <div class="formula-ticker__track">
+      <span>sin(x)</span><span>·</span><span>x^2 - 4</span><span>·</span><span>1/x</span><span>·</span><span>e^x</span><span>·</span><span>ln(x)</span><span>·</span><span>√x</span><span>·</span><span>cos(x)</span><span>·</span><span>x^3 - 2x</span><span>·</span>
+      <span>sin(x)</span><span>·</span><span>x^2 - 4</span><span>·</span><span>1/x</span><span>·</span><span>e^x</span><span>·</span><span>ln(x)</span><span>·</span><span>√x</span><span>·</span><span>cos(x)</span><span>·</span><span>x^3 - 2x</span><span>·</span>
+    </div>
+  </div>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <span class="badge text-bg-primary mb-2">Задача дня</span>
+              <h5 class="card-title">Чему равно 2 + 2 × 2?</h5>
+              <p class="card-text text-body-secondary">Проверь себя — и посмотри решение.</p>
+              <details><summary class="fw-semibold">Показать решение</summary><p class="mt-2 mb-0">2 + 4 = <strong>6</strong></p></details>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <span class="badge text-bg-success mb-2">Статья</span>
+              <h5 class="card-title">Почему фракталы бесконечны</h5>
+              <p class="card-text text-body-secondary">Как из простой формулы рождается бесконечная красота.</p>
+              <a href="tasks.html" class="btn btn-sm btn-outline-primary">Читать →</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <span class="badge text-bg-warning mb-2">Инструмент</span>
+              <h5 class="card-title">Графики и 3D</h5>
+              <p class="card-text text-body-secondary">Введи формулу — увидишь график. Или покрути 3D-поверхность.</p>
+              <a href="tools.html" class="btn btn-sm btn-outline-primary">Открыть →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 bg-body-tertiary border-top border-bottom">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold mb-2">Как это работает</h2>
+        <p class="text-body-secondary mb-0">Три шага — и математика становится наглядной.</p>
+      </div>
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width:56px; height:56px; background: linear-gradient(135deg, var(--bs-primary), var(--accent-2)); color:#fff; font-weight:800; font-size:1.4rem;">1</div>
+              <h5 class="card-title">Введи формулу</h5>
+              <p class="card-text text-body-secondary mb-0">Например, <code>sin(x)</code> или <code>x^2 - 4</code>. Никаких установок.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width:56px; height:56px; background: linear-gradient(135deg, var(--bs-primary), var(--accent-2)); color:#fff; font-weight:800; font-size:1.4rem;">2</div>
+              <h5 class="card-title">Увидь график</h5>
+              <p class="card-text text-body-secondary mb-0">Мгновенно — 2D-кривая или вращающаяся 3D-поверхность.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width:56px; height:56px; background: linear-gradient(135deg, var(--bs-primary), var(--accent-2)); color:#fff; font-weight:800; font-size:1.4rem;">3</div>
+              <h5 class="card-title">Разберись в задаче</h5>
+              <p class="card-text text-body-secondary mb-0">Открой задачи, попробуй решить сам — и посмотри ответ.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <a href="tools.html" class="btn btn-primary btn-lg">Попробовать →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="p-4 p-lg-5 rounded-4 text-bg-dark">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <h3 class="fw-bold mb-2">Задача дня — на почту</h3>
+            <p class="mb-0 text-white-50">Одна интересная задача каждое утро. Без спама.</p>
+          </div>
+          <div class="col-lg-5">
+            <form class="d-flex gap-2" onsubmit="event.preventDefault(); this.reset(); showToast('Спасибо за подписку!');">
+              <input type="email" class="form-control" placeholder="ваш@email.ru" required>
+              <button class="btn btn-primary" type="submit">Подписаться</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-top py-4 mt-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="fw-bold fs-5 mb-2"><span style="color: var(--bs-primary);">∑</span> Математика</div>
+          <p class="text-body-secondary small mb-3">Помогаем школьникам, студентам и всем.</p>
+          <div class="d-flex gap-2">
+            <a href="https://t.me/" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary" title="Telegram">✈️</a>
+            <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary" title="GitHub">💻</a>
+            <a href="mailto:hello@example.ru" class="btn btn-sm btn-outline-secondary" title="Email">✉️</a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <ul class="list-unstyled small mb-0">
+            <li class="mb-2"><a href="tasks.html" class="link-secondary text-decoration-none">Задачи</a></li>
+            <li class="mb-2"><a href="tools.html" class="link-secondary text-decoration-none">Инструменты</a></li>
+            <li><a href="about.html" class="link-secondary text-decoration-none">О проекте</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-3">
+          <h6 class="fw-bold mb-3">Контакты</h6>
+          <ul class="list-unstyled small mb-0">
+            <li class="mb-2"><a href="mailto:hello@example.ru" class="link-secondary text-decoration-none">hello@example.ru</a></li>
+            <li class="mb-2"><a href="https://t.me/" target="_blank" rel="noopener" class="link-secondary text-decoration-none">Telegram</a></li>
+            <li><a href="https://github.com/" target="_blank" rel="noopener" class="link-secondary text-decoration-none">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 small text-body-secondary">
+        <span>© 2026 Математика. Все права защищены.</span>
+        <span>Образовательный проект · не заменяет учебник</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:1100;">
+    <div id="toast" class="toast align-items-center text-bg-success border-0">
+      <div class="d-flex">
+        <div class="toast-body" id="toastMsg">Готово</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <button id="toTop" class="to-top-btn" title="Наверх" aria-label="Наверх">
+    <span>Наверх</span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Определяем текущую тему для выбора цвета частиц
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+      // В светлой теме берем насыщенный фиолетовый, в темной - более светлый
+      const particleColor = isDark ? '#b39ddb' : '#6f42c1'; 
+      const lineColor = isDark ? '#80deea' : '#00b8d4'; 
+
+      particlesJS("particles-js", {
+        "particles": {
+          "number": { "value": 65, "density": { "enable": true, "value_area": 800 } }, // Чуть больше точек
+          "color": { "value": particleColor },
+          "shape": { "type": "circle" },
+          "opacity": { 
+            "value": 0.8, // Стало заметнее (было 0.4)
+            "random": true, 
+            "anim": { "enable": true, "speed": 0.8, "opacity_min": 0.3, "sync": false } 
+          },
+          "size": { 
+            "value": 4.5, // Точки крупнее (было 3)
+            "random": true, 
+            "anim": { "enable": true, "speed": 2, "size_min": 1, "sync": false } 
+          },
+          "line_linked": { 
+            "enable": true, 
+            "distance": 160, 
+            "color": lineColor, 
+            "opacity": 0.5, // Линии ярче (было 0.2)
+            "width": 1.5 // Линии чуть толще
+          },
+          "move": { 
+            "enable": true, 
+            "speed": 1.5, 
+            "direction": "none", 
+            "random": true, 
+            "straight": false, 
+            "out_mode": "out", 
+            "bounce": false 
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": { "enable": true, "mode": "grab" }, // При наведении линии тянутся к мышке
+            "onclick": { "enable": true, "mode": "push" }  // При клике добавляются новые
+          },
+          "modes": {
+            "grab": { "distance": 200, "line_linked": { "opacity": 0.7 } }, // Эффект при наведении ярче
+            "push": { "particles_nb": 4 }
+          }
+        },
+        "retina_detect": true
+      });
+    });
+  </script>
+</body>
+</html>
